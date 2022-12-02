@@ -13,7 +13,7 @@ import pandas as pd
 import numpy as np
 
 movies = pd.read_csv('data/movies.csv')
-ratings_reduced = pd.read_pickle(r'data/ratings_movies_reduced.pkl')
+ratings_reduced = pd.read_csv(r'data/ratings_movies_reduced.csv')
 
 def create_user_vector(user_rating, movies):
     '''
