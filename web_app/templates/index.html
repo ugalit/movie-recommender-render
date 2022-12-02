@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie recommendation</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Hello Goodbye and Ciao {{name}}</h1>
+    <h3>Welcome to my movie recommender page</h3>
+
+    <img src="https://images.unsplash.com/photo-1616530940355-351fabd9524b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80" width="300" height="300">
+
+    <form action="/recommendation">
+        <select name="method">
+            <option value="Random">Random</option>
+            <option value="Popular">Popular</option>
+            <option value="NMF">NMF</option>
+            <option value="Neighborhood">Neighborhood</option>
+        </select>
+        <br></br>
+
+        {% for _ in range(3)%}
+        <input type="text" name="title" placeholder="title" list="movies_list" required>
+        <input type="number" name="rating" placeholder="1-5" min="1" max="5" required>
+        <br></br>
+        {%endfor%}
+
+        <button type="submit">Show movie recommendations</button>
+        <br></br>
+    </form>
+
+    <datalist id="movies_list">
+        {%for mov in movies_list%}
+        <option value="{{mov}}">{{mov}}</option>
+        {%endfor%}
+    </datalist>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <script>
+        var duration = 15 * 1000;
+        var animationEnd = Date.now() + duration;
+        var skew = 1;
+
+        function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+        }
+
+        (function frame() {
+        var timeLeft = animationEnd - Date.now();
+        var ticks = Math.max(200, 500 * (timeLeft / duration));
+        skew = Math.max(0.8, skew - 0.001);
+
+        confetti({
+            particleCount: 1,
+            startVelocity: 0,
+            ticks: ticks,
+            origin: {
+            x: Math.random(),
+            // since particles fall down, skew start toward the top
+            y: (Math.random() * skew) - 0.2
+            },
+            colors: ['#ffffff'],
+            shapes: ['circle'],
+            gravity: randomInRange(0.4, 0.6),
+            scalar: randomInRange(0.4, 1),
+            drift: randomInRange(-0.4, 0.4)
+        });
+
+        if (timeLeft > 0) {
+            requestAnimationFrame(frame);
+        }
+        }());
+    </script>
+
+</body>
+</html>

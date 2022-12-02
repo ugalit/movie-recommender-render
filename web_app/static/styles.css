@@ -1,0 +1,67 @@
+h1{
+    color: darkcyan;
+    font-size: 50px;
+}
+
+h2{
+    color: darkcyan;
+    font-size: 40px;
+}
+
+h3{
+    color: darkcyan;
+}
+
+body{
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+    font-size: medium;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    /* background-color: blanchedalmond; */
+    background-image: url("timothy-eberly-dTLlhgeEJWg-unsplash.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+input,button{
+    background-color:azure;
+    padding: 10px;
+    font-size: inherit;
+    font-family: inherit;
+    outline-color:cadetblue;
+}
+
+button{
+    color:cadetblue;
+    font-style: italic;
+    font-size: large;
+    transition: all 3s;
+}
+
+button:hover{color:coral;}
+
+input[type=number]{width:60px}
+
+ul{
+    display: inline-block;
+    text-align: left;
+    }
+
+ol{
+    display: inline-block;
+    text-align: left;
+    }
+
+.movies li{
+    padding: 10px;
+}
+
+.movies li:nth-child(odd){
+    background-color:lightsteelblue;
+}
+
+.movies li:nth-child(even){
+    background-color:aliceblue;
+}
