@@ -6,11 +6,8 @@ UTILS
     - ratings
     - user_item_matrix
     - item-item matrix
-- Models:
-    - nmf_model: trained sklearn NMF model
 """
 import pandas as pd
-import numpy as np
 
 movies = pd.read_csv('data/movies.csv')
 ratings_reduced = pd.read_csv(r'data/ratings_movies_reduced.csv')
@@ -25,13 +22,12 @@ def create_user_vector(user_rating, movies):
     user_vector = None
     return user_vector
 
-
 def movie_to_id(string_titles):
     '''
     converts movie title to id for use in algorithms
     '''
 
-    movieID = movies.set_index('title').loc[string_titles]['movieid']
+    movieID = movies.set_index('title').loc[string_titles]['movieId']
     movieID = movieID.tolist()
 
     return movieID
@@ -40,7 +36,6 @@ def id_to_movie(movieID):
     '''
     converts movie Id to title
     '''
-    rec_title = movies.set_index('movieid').loc[movieID]['title']
+    rec_title = movies.set_index('movieId').loc[movieID]['title']
 
     return rec_title
-

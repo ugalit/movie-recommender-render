@@ -1,23 +1,26 @@
-from flask import Flask, render_template, request
-from recommender import recommend_random, recommend_with_NMF, recommend_neighborhood, recommend_popular
-from utils import movies, ratings_reduced, movie_to_id, id_to_movie
+'''
+Movie recommendation website using Flask
+choice between 4 algorithms that give recommendations
+based on user input , random or popular movies
+'''
 
-'''
-Flask: super lightweight
-alternative: Jinja: double curly brackets
-streamlit
-'''
+
+from flask import Flask, render_template, request
+from recommender import recommend_random, recommend_NMF, recommend_neighborhood, recommend_popular
+from utils import movies, ratings_reduced, movie_to_id, id_to_movie
 
 app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    return render_template('index.html', name='Silke', movies_list=movies.title.to_list())
+    '''Template for main page'''
+    return render_template('index.html', name='movie lovers', movies_list=movies.title.to_list())
 
 @app.route('/recommendation')
-def random_recommendation():
+def recommendation():
     '''ol: ordered list; ul: unordered list; li: list'''
 
+    k = int(request.args.get('k'))
     titles = request.args.getlist('title')
     ratings = request.args.getlist('rating')
     ids = movie_to_id(titles)
@@ -29,24 +32,24 @@ def random_recommendation():
     print(user_rating)
 
     if request.args['method'] == 'Random':
-        recs = recommend_random(k=5).to_list()
+        recs = recommend_random(k=k).to_list()
         return render_template('recommender.html', values = recs)
     elif request.args['method'] == 'Popular':
-        recs = recommend_popular(query=query_dict, ratings=ratings_reduced)
+        recs = recommend_popular(query=query_dict, ratings=ratings_reduced, k=k)
         recs = id_to_movie(recs)
         return render_template('recommender.html', values = recs)
-    elif request.args['method']=='NMF':
-        recs = recommend_with_NMF(user_rating, k=5)
-        return 'Function not yet defined'
     elif request.args['method']=='Neighborhood':
-        recs = recommend_neighborhood(user_rating, model='model', k=5)
-        return 'Function not yet defined'
+        recs = recommend_neighborhood(query=query_dict, ratings=ratings_reduced, k=k)
+        return render_template('recommender.html', values = recs)
+    elif request.args['method']=='NMF':
+        recs = recommend_NMF(query=query_dict, ratings=ratings_reduced, k=k)
+        recs = id_to_movie(recs)
+        return render_template('recommender.html', values = recs)
     else:
-        return 'Function not defined'
+        return 'Please select a recommendation algorithm'
+
+# default port that uses http protocol
+# debug option: see errors; update page automatically
 
 if __name__ == '__main__':
-    '''
-    default port that uses http protocol
-    debug option: see errors; update page automatically
-    '''
-    app.run(port=5000, debug=True) 
+    app.run(port=5000, debug=True)

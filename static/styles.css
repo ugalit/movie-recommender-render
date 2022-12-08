@@ -8,9 +8,12 @@ h2{
     font-size: 40px;
 }
 
-h3{
-    color: darkcyan;
-}
+h3{color: rgb(5, 202, 202);}
+
+p{color: azure;}
+
+label{color: azure;}
+
 
 body{
     width: 80%;
@@ -52,6 +55,7 @@ ul{
 ol{
     display: inline-block;
     text-align: left;
+    list-style-position: inside;
     }
 
 .movies li{

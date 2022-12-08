@@ -8,25 +8,30 @@
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    <h1>Hello Goodbye and Ciao {{name}}</h1>
+    <h1>Hello {{name}}, what do you want to watch tonight?</h1>
     <h3>Welcome to my movie recommender page</h3>
 
-    <img src="https://images.unsplash.com/photo-1616530940355-351fabd9524b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80" width="300" height="300">
-
     <form action="/recommendation">
+        <label for="method">Choose a prediction method:</label>
         <select name="method">
+            <option selected="">--</option>
             <option value="Random">Random</option>
             <option value="Popular">Popular</option>
-            <option value="NMF">NMF</option>
             <option value="Neighborhood">Neighborhood</option>
+            <option value="NMF">NMF</option>
         </select>
         <br></br>
 
-        {% for _ in range(3)%}
+        <p>Rate 3 movies to get predictions:</p>
+        {% for _ in range(3) %}
         <input type="text" name="title" placeholder="title" list="movies_list" required>
         <input type="number" name="rating" placeholder="1-5" min="1" max="5" required>
         <br></br>
         {%endfor%}
+
+        <label for="k">How many recommendations do you want?</label>
+        <input type="number" name="k" placeholder="1">
+        <br></br>
 
         <button type="submit">Show movie recommendations</button>
         <br></br>
@@ -37,6 +42,8 @@
         <option value="{{mov}}">{{mov}}</option>
         {%endfor%}
     </datalist>
+
+    <img src="https://images.unsplash.com/photo-1616530940355-351fabd9524b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80" width="300" height="300">
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
